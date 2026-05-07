@@ -1,4 +1,5 @@
 from dbFunctions import *
+from utilFunctions import *
 from dotenv import find_dotenv, load_dotenv
 
 # load env variables from root
@@ -11,5 +12,6 @@ username = os.getenv("username")
 def main():
     deleteAllGamesFromDB()
     addAllGamesToDB(username, API_TOKEN)
+
 if __name__ == "__main__":
     main()

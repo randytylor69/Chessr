@@ -5,8 +5,12 @@ CREATE TABLE all_games (
     status TEXT NOT NULL,
     winner INT NOT NULL,
     moves TEXT NOT NULL,
+    opening TEXT,
     finishTime TEXT NOT NULL
+
 )
+
+
 
 db.execute(
 	'ALTER TABLE all_games RENAME COLUMN result TO winner'

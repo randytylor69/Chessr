@@ -1,6 +1,6 @@
 import sqlite3, os
 from fetchFunctions import *
-
+from utilFunctions import *
 def addAllGamesToDB(username, API_TOKEN):
 
     db = sqlite3.connect('playerstats.db', isolation_level=None)
@@ -33,12 +33,15 @@ def addAllGamesToDB(username, API_TOKEN):
             # ---- check moves and change moves to PGN notation
             moves = movesToPgn(game['moves'])
 
+            # --- opening name
+            opening = getOpeningFromPGN(moves)
+
             # ---- check finish time
             finishTime = game['lastMoveAt']
 
             db.execute(
-                'INSERT INTO all_games VALUES(?,?,?,?,?,?,?)',
-                [id, color, variant, status, winner, moves, finishTime]
+                'INSERT INTO all_games VALUES(?,?,?,?,?,?,?,?)',
+                [id, color, variant, status, winner, moves, opening, finishTime]
             )
         except Exception as e:
             print(f"An error has occured: {e}")
@@ -49,7 +52,6 @@ def addAllGamesToDB(username, API_TOKEN):
 def deleteAllGamesFromDB():
     db = sqlite3.connect('playerstats.db', isolation_level=None)
     db.execute('DELETE FROM all_games WHERE 1')
-
 
 def movesToPgn(moves):
     pgn = ""
