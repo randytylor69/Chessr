@@ -30,8 +30,8 @@ def addAllGamesToDB(username, API_TOKEN):
             # ---- check status
             status = game['status']
             
-            # ---- check moves
-            moves = game['moves']
+            # ---- check moves and change moves to PGN notation
+            moves = movesToPgn(game['moves'])
 
             # ---- check finish time
             finishTime = game['lastMoveAt']
@@ -49,3 +49,27 @@ def addAllGamesToDB(username, API_TOKEN):
 def deleteAllGamesFromDB():
     db = sqlite3.connect('playerstats.db', isolation_level=None)
     db.execute('DELETE FROM all_games WHERE 1')
+
+
+def movesToPgn(moves):
+    pgn = ""
+    li = moves.split(" ")
+    moveNum = 1
+    index = 0
+    whiteMove = ""
+    blackMove = ""
+    movesCopied = 0
+
+    while index < len(li) - 1:
+        whiteMove = li[index]
+        blackMove = li[index+1]
+        pgn += f"{moveNum}. {whiteMove} {blackMove} "
+
+        index += 2
+        moveNum += 1
+        movesCopied += 2
+    
+    if movesCopied < len(li):
+        pgn += f"{moveNum}. {li[-1]}"
+
+    return pgn
