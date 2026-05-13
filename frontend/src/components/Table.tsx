@@ -1,6 +1,8 @@
 import "./Table.css";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 export default function Table() {
+  const [sortBy, setSortBy] = useState<string>(sorting_options[0].key);
   const fetchData = async (url: string) => {
     try {
       const res = await fetch(url, {
@@ -20,7 +22,7 @@ export default function Table() {
     }
   };
 
-  const { data: winrates, isLoading } = useQuery({
+  const { data: openings, isLoading } = useQuery({
     queryFn: () =>
       fetchData(import.meta.env.VITE_BACKEND_API_OPENING_WINRATE_URL),
     queryKey: ["openings"],
@@ -35,30 +37,58 @@ export default function Table() {
   }
 
   return (
-    <table>
-      <thead>
-        {headers.map((header) => (
-          <th key={header.id}>
-            <h1 className="table-header">{header.label}</h1>
-          </th>
-        ))}
-      </thead>
-      <tbody>
-        {winrates.map((row: any, index: number) => (
-          <tr key={index}>
-            {headers.map((header) => (
-              <td key={header.id}>{row[header.key]}</td>
+    <div className="table-container">
+      <div className="table-title-container">
+        <h1>Your Openings</h1>
+      </div>
+      <div className="table-content-wrapper">
+        {/** --- sorting handler --- */}
+        <section className="table-sorting-container">
+          <div className="sorting-tabs-container">
+            {sorting_options.map((option) => (
+              <button
+                key={option.id}
+                className="sorting-option"
+                onClick={() => setSortBy(option.key)}
+                style={{
+                  color: sortBy == option.key ? "var(--blue-primary)" : "black",
+                }}
+              >
+                <h3>{option.name}</h3>
+              </button>
             ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+          </div>
+        </section>
+        {/** --- actual table grid --- */}
+        <section className="table-openings-container">
+          {openings.map((op: any) => (
+            <div key={op.opening} className="opening-row-wrapper">
+              <div className="opening-name">
+                <h3>{op.opening.split(":")[0]}</h3>
+                {op.opening.split(":").length > 1 && (
+                  <h5>{op.opening.split(":")[1]}</h5>
+                )}
+              </div>
+              <div className="opening-games">
+                <p>{op.games_count} games</p>
+              </div>
+              <div className="opening-color">
+                <p>{op.color}</p>
+              </div>
+              <div className="opening-winrate">
+                <p>{(op.winrate * 100).toFixed(2)}%</p>
+              </div>
+            </div>
+          ))}
+        </section>
+      </div>
+    </div>
   );
 }
 
-const headers = [
-  { id: 1, label: "Opening", key: "opening" },
-  { id: 2, label: "Color", key: "color" },
-  { id: 3, label: "Games", key: "games_count" },
-  { id: 4, label: "Winrate", key: "winrate" },
+const sorting_options = [
+  { id: 0, name: "Sort by Games", key: "games_count" },
+  { id: 1, name: "Sort by Win Rate", key: "winrate" },
+  { id: 2, name: "Sort by Name", key: "opening" },
+  { id: 3, name: "Sort by Color", key: "color" },
 ];

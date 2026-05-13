@@ -1,6 +1,6 @@
 .header-wrapper {
   width: 100vw;
-  height: 8rem;
+  height: 6rem;
 
   border-bottom: var(--black-secondary) 2px solid;
   /* flexbox */

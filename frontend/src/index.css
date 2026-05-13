@@ -16,3 +16,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+button {
+  background-color: transparent;
+  border: none;
+  margin: none;
+  padding: none;
+}

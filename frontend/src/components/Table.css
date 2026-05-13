@@ -1,21 +1,138 @@
-.table-header {
-  font-size: 16px;
-  font-weight: 600;
-}
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap");
 
-table,
-td,
-th {
-  border: var(--black-secondary) 2px solid;
-}
-
-table {
-  border-collapse: collapse;
+.table-container {
   width: 100%;
   max-width: 80rem;
+  height: auto;
+  min-height: 100vh;
+
+  /* flexbox */
+  display: flex;
+  flex-direction: column;
+
+  & .table-title-container {
+    width: 100%;
+    height: 6rem;
+    border-top: var(--black-secondary) 2px solid;
+    padding-top: 6px;
+  }
 }
 
-td,
-th {
-  padding: 6px;
+.table-content-wrapper {
+  width: 100%;
+  max-width: 80rem;
+  height: auto;
+
+  /* grid
+
+  <- 8 cols -->
+  _____________
+  |   |       |
+  |   |       |
+  |   |       |
+  |   |       |
+  |   |       |
+  ...
+  |   |       |
+  |___________|
+
+  */
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 1;
+}
+
+.table-sorting-container {
+  grid-column: 1;
+
+  height: 100%;
+
+  /* flexbox */
+  display: flex;
+  align-items: start;
+
+  .sorting-tabs-container {
+    width: 80%;
+    height: 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: left;
+
+    .sorting-option {
+      border-top: var(--black-secondary) 2px solid;
+      cursor: pointer;
+      display: flex;
+      justify-content: left;
+      & h3 {
+        font-weight: 500;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.table-openings-container {
+  grid-column: 2 / 9;
+  /* flexbox */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  & .opening-row-wrapper {
+    width: 100%;
+    height: 6rem;
+    display: grid;
+
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 20px;
+
+    & .opening-name {
+      grid-column: 1/4;
+      grid-row: 1;
+      border-top: var(--black-secondary) 2px solid;
+      & h3 {
+        font-size: 36px;
+      }
+
+      & h5 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 400;
+        font-style: italic;
+        font-size: 28px;
+      }
+    }
+
+    & .opening-games {
+      grid-column: 4;
+      grid-row: 1;
+      border-top: var(--black-secondary) 2px solid;
+      padding-top: 8px;
+      & p {
+        font-weight: 600;
+      }
+    }
+
+    & .opening-color {
+      grid-column: 5;
+      grid-row: 1;
+      border-top: var(--black-secondary) 2px solid;
+      padding-top: 8px;
+      & p {
+        font-weight: 600;
+      }
+    }
+
+    & .opening-winrate {
+      grid-column: 6/8;
+      grid-row: 1;
+      border-top: var(--black-secondary) 2px solid;
+      padding-top: 8px;
+      & p {
+        font-weight: 600;
+      }
+    }
+  }
 }
