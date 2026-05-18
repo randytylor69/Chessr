@@ -19,14 +19,14 @@ export default function Header() {
             onClick={() => setCurrentTab(el.id)}
             className="header-tab-container"
             style={{
-              backgroundColor:
+              /*             backgroundColor:
                 el.id == currentTab
                   ? "var(--black-primary)"
                   : "var(--white-primary)",
               color:
                 el.id == currentTab
                   ? "var(--white-primary)"
-                  : "var(--black-primary)",
+                  : "var(--black-primary)", */
               borderLeft: el.id == 0 ? "var(--black-secondary) 2px solid" : "",
             }}
           >

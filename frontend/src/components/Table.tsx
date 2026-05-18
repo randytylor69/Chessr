@@ -1,32 +1,10 @@
 import "./Table.css";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+
+import useTable from "../hooks/useTable";
 export default function Table() {
   const [sortBy, setSortBy] = useState<string>(sorting_options[0].key);
-  const fetchData = async (url: string) => {
-    try {
-      const res = await fetch(url, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": import.meta.env
-            .VITE_BACKEND_API_OPENING_WINRATE_URL,
-        },
-      });
-      if (!res.ok) {
-        throw new Error(`Error: Response Status ${res.status}`);
-      }
-      const data = await res.json();
-      return data;
-    } catch (e: any) {
-      console.error(e.message);
-    }
-  };
-
-  const { data: openings, isLoading } = useQuery({
-    queryFn: () =>
-      fetchData(import.meta.env.VITE_BACKEND_API_OPENING_WINRATE_URL),
-    queryKey: ["openings"],
-  });
+  const { openings, isLoading, sortOpeningBy } = useTable();
 
   if (isLoading) {
     return (
@@ -49,7 +27,10 @@ export default function Table() {
               <button
                 key={option.id}
                 className="sorting-option"
-                onClick={() => setSortBy(option.key)}
+                onClick={() => {
+                  sortOpeningBy(option.key);
+                  setSortBy(option.key);
+                }}
                 style={{
                   color: sortBy == option.key ? "var(--blue-primary)" : "black",
                 }}
