@@ -15,6 +15,19 @@
     height: 6rem;
     border-top: var(--black-secondary) 2px solid;
     padding-top: 6px;
+    /* flexbox */
+    display: flex;
+    gap: 1rem;
+
+    & p {
+      height: 2.7rem;
+      font-weight: 500;
+      font-size: 16px;
+      /* flexbox */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 

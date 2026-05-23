@@ -51,6 +51,7 @@ def addAllGamesToDB(username, API_TOKEN):
 def deleteAllGamesFromDB():
     db = sqlite3.connect('playerstats.db', isolation_level=None)
     db.execute('DELETE FROM all_games WHERE 1')
+    db.execute('DELETE FROM opening_winrate WHERE 1')
 
 '''
  1. Read from all_games table.

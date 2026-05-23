@@ -1,7 +1,7 @@
 import "./Table.css";
 import { useState } from "react";
-
 import useTable from "../hooks/useTable";
+
 export default function Table() {
   const [sortBy, setSortBy] = useState<string>(sorting_options[0].key);
   const { openings, isLoading, sortOpeningBy } = useTable();
@@ -17,7 +17,8 @@ export default function Table() {
   return (
     <div className="table-container">
       <div className="table-title-container">
-        <h1>Your Openings</h1>
+        <h1>Your Openings </h1>
+        <p>({openings.length})</p>
       </div>
       <div className="table-content-wrapper">
         {/** --- sorting handler --- */}

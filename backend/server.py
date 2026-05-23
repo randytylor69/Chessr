@@ -13,3 +13,5 @@ def openingWinrate():
     data = getDataFromTable("opening_winrate")
     return data
 
+# todo:
+# add a "playerRating" route that fetches player's rating from Lichess API
